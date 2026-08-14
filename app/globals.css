@@ -1,0 +1,228 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── CHAKDE DESIGN TOKENS ─────────────────────────────────────────────────── */
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-barlow-condensed);
+
+  /* Shadcn token bridge */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Chakde brand tokens */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-muted: var(--brand-muted);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-blue: var(--surface-blue);
+
+  /* Radius scale */
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-full: 9999px;
+
+  /* Motion */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* ─── LIGHT MODE ────────────────────────────────────────────────────────────── */
+:root {
+  /* Shadcn base */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.09 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.09 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.09 0 0);
+  --primary: oklch(0.09 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.96 0 0);
+  --secondary-foreground: oklch(0.09 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.96 0 0);
+  --accent-foreground: oklch(0.09 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.5 0 0);
+  --radius: 0rem;
+
+  /* Gymshark-style monochromatic — brand is black */
+  --brand: oklch(0.08 0 0);
+  --brand-foreground: oklch(1 0 0);
+  --brand-muted: oklch(0.95 0 0);
+
+  /* Surface tokens */
+  --surface: oklch(0.975 0 0);
+  --surface-raised: oklch(1 0 0);
+  --surface-blue: oklch(0.964 0.016 236);
+}
+
+/* ─── DARK MODE ─────────────────────────────────────────────────────────────── */
+.dark {
+  --background: oklch(0.09 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.12 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.12 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.09 0 0);
+  --secondary: oklch(0.18 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.18 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.18 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.5 0 0);
+
+  --brand: oklch(0.985 0 0);
+  --brand-foreground: oklch(0.08 0 0);
+  --brand-muted: oklch(0.15 0 0);
+
+  --surface: oklch(0.12 0 0);
+  --surface-raised: oklch(0.15 0 0);
+  --surface-blue: oklch(0.14 0.015 236);
+}
+
+/* ─── BASE STYLES ────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans antialiased scroll-smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display uppercase tracking-tight;
+  }
+
+  ::selection {
+    background-color: oklch(0.08 0 0 / 0.12);
+  }
+}
+
+/* ─── UTILITY CLASSES ────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-brand { color: var(--brand); }
+  .bg-brand { background-color: var(--brand); color: var(--brand-foreground); }
+  .bg-brand-muted { background-color: var(--brand-muted); }
+  .border-brand { border-color: var(--brand); }
+
+  .text-display {
+    @apply font-display font-black leading-[0.9] tracking-[-0.01em] uppercase;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-200;
+  }
+  .hover-lift:hover {
+    @apply -translate-y-0.5;
+  }
+
+  .focus-brand:focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 2px;
+  }
+
+  .aspect-product {
+    aspect-ratio: 4 / 5;
+  }
+
+  .input-base {
+    @apply w-full px-4 py-3 border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground focus:border-foreground transition-all;
+  }
+
+  .bg-surface { background-color: var(--surface); }
+  .bg-surface-raised { background-color: var(--surface-raised); }
+  .bg-surface-blue { background-color: var(--surface-blue); }
+
+  /* Primary: solid black — Gymshark-style */
+  .btn-athletic {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-bold uppercase tracking-[0.08em] text-[11px] px-8 py-[14px] transition-all duration-150 active:scale-[0.98];
+  }
+
+  .btn-brand {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-bold uppercase tracking-[0.08em] text-[11px] px-8 py-[14px] transition-all duration-150 active:scale-[0.98];
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+  .btn-brand:hover { opacity: 0.82; }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-bold uppercase tracking-[0.08em] text-[11px] px-8 py-[14px] transition-all duration-150 active:scale-[0.98] bg-foreground text-background;
+  }
+  .btn-dark:hover { opacity: 0.82; }
+
+  /* Secondary: black outline */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-bold uppercase tracking-[0.08em] text-[11px] px-8 py-[14px] transition-all duration-150 active:scale-[0.98];
+    border: 1.5px solid var(--foreground);
+    background: transparent;
+    color: var(--foreground);
+  }
+  .btn-outline:hover {
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+
+  /* For dark bg sections */
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-bold uppercase tracking-[0.08em] text-[11px] px-8 py-[14px] transition-all duration-150 active:scale-[0.98];
+    border: 1.5px solid rgb(255 255 255 / 0.35);
+    color: rgb(255 255 255 / 0.85);
+    background: transparent;
+  }
+  .btn-outline-light:hover {
+    border-color: white;
+    color: white;
+  }
+}
